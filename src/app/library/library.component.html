@@ -1,0 +1,104 @@
+<div class='container'>
+  <div class="row" [hidden]="submitted">
+      <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Available</th>
+              <th scope="col">Year</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Review</th>
+              <th scope="col">Price</th>
+             </tr>
+          </thead>
+          <tbody>   <!-- String interpolation table to bring mock data-->
+            <tr *ngFor="let title of videoItems"> <!--Looping through the videoItems array-->
+              <td>{{title.id}}</td>
+              <td>{{title.name}}</td>
+              <td>{{title.available}}</td>
+              <td>{{title.year}}</td>
+              <td>{{title.rating}}</td>
+              <td>{{title.review}}</td>
+              <td>{{title.price}}</td>
+            </tr>
+          </tbody>
+
+        </table>
+    <form (ngSubmit)="addNew(f)" #f = "ngForm"> <!--Adding the template driven form and defining the click event on the form-->
+        <div class="form-group"> <!-- Input tag to have inout fields and two way data binding with ngModel with key values
+        required property to make that field required-->
+            <!-- <input 
+            type="number"   
+            class="form-control hidden"
+            id="id" 
+            disabled
+            name="id" 
+            #id="ngModel"
+            [ngModel]="videoItems.length+1"> <!-- Auto Increment the value and continue in ts file,  
+              as well as ngModel is neede to use properties valid. pristine, invalid etc. -->
+            <input
+            type="text"
+            class="form-control"
+            id="name"
+            required
+            ngModel
+            name="name"
+            #name="ngModel">
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger"> <!--hidden property binding made to hint user taht he should fill this field must
+                and message when it is invalid or pristine-->
+              Name is required
+            </div>
+            <input
+            type="number"
+            class="form-control"
+            id="available"
+            required
+            ngModel
+            name="available"
+            #available="ngModel">
+            <input
+            type="number"
+            class="form-control"
+            id="year"
+            required
+            ngModel
+            name="year"
+            #year="ngModel">
+            <div [hidden]="year.valid || year.pristine"
+                 class="alert alert-danger">
+              Year is required
+            </div>
+            <input
+            type="text/number"
+            class="form-control"
+            id="rating"
+            ngModel
+             name="rating" 
+             #rating="ngModel"
+             required>
+            <input
+            type="number"
+            class="form-control"
+            id="review"
+            required
+            ngModel
+            name="review" #review="ngModel">
+            <input
+            type="number"
+            class="form-control"
+            id="price"
+            required
+            ngModel
+            name="price"
+            #price="ngModel">
+        </div>
+<!-- Create button click event related to the form to make it submit when it is filled with disabled property binding and passing 
+  the values from the form tag -->
+        <button type="submit" class="form-control" [disabled]="!f.form.valid"> Add </button>
+        <button type="button" class="rentButton" (click)="rent()"> Rent </button>
+
+      </form>
+  </div>
+</div>
