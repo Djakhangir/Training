@@ -13,92 +13,149 @@
              </tr>
           </thead>
           <tbody>   <!-- String interpolation table to bring mock data-->
-            <tr *ngFor="let title of videoItems"> <!--Looping through the videoItems array-->
-              <td>{{title.id}}</td>
+            <tr *ngFor="let title of videoItems, let i = index" (click)="setRow(title.id)" [class.active] = "title.id == selectedRow"> 
+              <td>{{title.id}}</td> <!--Looping through the videoItems array; add the click fn and class active for identification the selected row-->
               <td>{{title.name}}</td>
-              <td>{{title.available}}</td>
+              <input type="number" class="availabilityTable" value="{{title.available}}" (input)="title.available = $event.target.value"> 
+  <!--Above Im changing the value to enable rent button again, meaning update information after it is 0-->
+  <!-- thereisnt (click)="" event in input tag, there is (input)="" with change events like ngModuleChange, Change etc.-->
               <td>{{title.year}}</td>
               <td>{{title.rating}}</td>
               <td>{{title.review}}</td>
-              <td>{{title.price}}</td>
+              <td>{{title.price}}</td>                         
+ <!--disabled property binded, we pass expression method with info to send message and ts file will receive it-->
+          <button type="button" 
+          class="rentButton"
+          (click)="rent(title)"
+          [disabled]="allRented(title)"
+          [style.color]="allRented(title) ? 'red' : 'green'"> Rent </button>
+          <br> <!--Passing the information title to rent method to send message and then receive it in ts file-->
+          <button type="button" class="edit" (click)="editRow()"> Edit </button>
+          <button type="button" class="remove" (click)="deleteRow(index)" [disabled]="!allRented(title)"> Delete </button>
             </tr>
-          </tbody>
 
-        </table>
+            <div class="well well-lg">
+              Selected Row : <strong>{{selectedRow}}</strong>
+          </div>
+          </tbody>
+<!--Passing the value to another input tag mechanism-->
+          <div class="input">
+            <input type="text" #leftBox> <!--by # sign we access the element-->
+            <button (click)="rightBox.value = leftBox.value">>></button>
+            <input type="text" readonly #rightBox>
+          </div>
+
+        </table> <!-- To acccess the ngModel properties I call it my random instance assigned to ngForm in form (parent) tag -->
     <form (ngSubmit)="addNew(f)" #f = "ngForm"> <!--Adding the template driven form and defining the click event on the form-->
-        <div class="form-group"> <!-- Input tag to have inout fields and two way data binding with ngModel with key values
-        required property to make that field required-->
-            <!-- <input 
-            type="number"   
-            class="form-control hidden"
-            id="id" 
-            disabled
-            name="id" 
-            #id="ngModel"
-            [ngModel]="videoItems.length+1"> <!-- Auto Increment the value and continue in ts file,  
-              as well as ngModel is neede to use properties valid. pristine, invalid etc. -->
-            <input
+        <div class="form-group"> <!-- Input tag to have input fields and two way data binding with ngModel with key values
+        required property to make that field required;
+              ngModel is needed to use properties valid. pristine, invalid etc. this way can be tricky that is why I used 
+            another way with spread syntax in ts file ipush and add the id to form.value while pushing and delete id input tag at all.  -->
+            <label>Movie Name: <input
             type="text"
             class="form-control"
             id="name"
             required
             ngModel
             name="name"
-            #name="ngModel">
+            #name="ngModel"> </label>
             <div [hidden]="name.valid || name.pristine"
                  class="alert alert-danger"> <!--hidden property binding made to hint user taht he should fill this field must
                 and message when it is invalid or pristine-->
               Name is required
             </div>
-            <input
+            <label>Available Number: <input
             type="number"
             class="form-control"
             id="available"
             required
             ngModel
             name="available"
-            #available="ngModel">
-            <input
+            #available="ngModel"> </label> 
+            <label>Year: <input
             type="number"
             class="form-control"
             id="year"
             required
             ngModel
             name="year"
-            #year="ngModel">
+            #year="ngModel"> </label>
             <div [hidden]="year.valid || year.pristine"
                  class="alert alert-danger">
               Year is required
             </div>
-            <input
+            <label>Rating:<input
             type="text/number"
             class="form-control"
             id="rating"
             ngModel
              name="rating" 
              #rating="ngModel"
-             required>
-            <input
+             required> </label>
+            <label>Reviews:<input
             type="number"
             class="form-control"
             id="review"
             required
             ngModel
-            name="review" #review="ngModel">
-            <input
+            name="review" #review="ngModel">  </label>
+            <label>Price:<input
             type="number"
             class="form-control"
             id="price"
             required
             ngModel
             name="price"
-            #price="ngModel">
+            #price="ngModel"></label> 
         </div>
 <!-- Create button click event related to the form to make it submit when it is filled with disabled property binding and passing 
   the values from the form tag -->
         <button type="submit" class="form-control" [disabled]="!f.form.valid"> Add </button>
-        <button type="button" class="rentButton" (click)="rent()"> Rent </button>
-
       </form>
   </div>
 </div>
+
+
+              <!--Train purposes second table to have second different ways of doing different things-->
+
+
+<!--  ngSwitch directive is explained in paper
+<div>
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Available</th>
+        <th scope="col">Year</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Review</th>
+        <th scope="col">Price</th>
+       </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let title of videoItems, trackBy trackById" (click)="setRow(title.id)" [class.active] = "title.id == selectedRow"> 
+        <td>{{title.id}}</td> 
+        <td>{{title.name}}</td>               <!--or combine to one stmnt as [(ngModel)]="title.available"> and delete the rest-->
+        <!-- <input type="number" class="availabilityTable" [ngModel]="title.available" (ngModelChange)="title.available = $event"> 
+        <td>{{title.year}}</td>
+        <td>{{title.rating}}</td>
+        <td>{{title.review}}</td>
+        <td>{{title.price}}</td>                         
+    <button type="button" 
+    class="rentButton"
+    (click)="rent(title)"
+    [disabled]="allRented(title)"
+    [style.color]="allRented(title) ? 'red' : 'green'"> Rent </button>
+    <br>
+    <button type="button" class="edit" (click)="editRow()"> Edit </button>
+    <button type="button" class="remove" (click)="deleteRow(index)" [disabled]="!allRented(title)"> Delete </button>
+      </tr> 
+
+      <div class="well well-lg">
+        Selected Row : <strong>{{selectedRow}}</strong>
+    </div> 
+    
+    </tbody>
+<table> -->
+  
