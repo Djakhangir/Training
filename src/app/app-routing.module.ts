@@ -1,27 +1,37 @@
 import { NgModule } from '@angular/core';
-// import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { UsersComponent } from './users/users.component';
+import { PostsComponent } from './posts/posts.component';
+import { EditComponent } from './edit/edit.component';
+import { LibraryComponent } from './library/library.component';
+import { DetailsComponent } from './details/details.component';
 
-// import { LibraryComponent } from './library/library.component';
+const routes: Routes = [
+  {
+    path:'',
+    component: UsersComponent
+  },
+  {
+    path:'details/:id',
+    component: DetailsComponent
+  },
+  {
+    path:'library',
+    component: LibraryComponent
+  },
+  // {
+  //   path:'edit/:id',
+  //   component: LibraryComponent
+  // },
+  {
+    path:'posts',
+    component: PostsComponent
+  },
 
-// const routes: Routes = [
-//   {
-//     path:'',
-//     component: LibraryComponent,
-//     pathMatch:'full'
-//   },
-//   {
-//     path:'library/:id',
-//     component: LibraryComponent
-//   },
-//   {
-//     path:'library/:id/:action',
-//     component: LibraryComponent,
-//   },
-  
-// ];
+];
 
 @NgModule({
-  // imports: [RouterModule.forRoot(routes)],
-  // exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }
