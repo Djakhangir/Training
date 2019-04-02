@@ -1,12 +1,11 @@
 <h1>Users</h1>
 
-<ul>
+<ul [@listStagger] = "users$"> <!-- we use the name of the animation on users$ -->
   <li *ngFor="let user of users$"> <!--we iterate through the users$ object and create a name to refer in interpolation below -->
     <a routerLink="/details/{{user.id}}"> <!--id is coming from the Api/json file-->
       {{user.name}} 
     </a> <!--user.name is to show the name of the user related to the id-->
-
-
+    
     <ul>
       <li>{{user.email}}</li>
       <li>
