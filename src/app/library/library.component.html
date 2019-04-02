@@ -1,7 +1,9 @@
+<h1>Video Library</h1>
+
 <div class='container'>
   <div class="row" [hidden]="submitted">
       <table class="table table-light">
-          <thead>
+          <thead> <!--working with mock data in .ts file of this component-->
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Name</th>
@@ -12,7 +14,7 @@
               <th scope="col">Price</th>
              </tr>
           </thead>
-          <tbody>   <!-- String interpolation table to bring mock data-->
+          <tbody class="table-body">   <!-- String interpolation table to bring mock data-->
             <tr *ngFor="let title of videoItems, let i = index" (click)="setRow(title.id)" [class.active] = "title.id == selectedRow"> 
               <td>{{title.id}}</td> <!--Looping through the videoItems array; add the click fn and class active for identification the selected row-->
               <td>{{title.name}}</td>
@@ -113,6 +115,25 @@
         <button type="submit" class="form-control" [disabled]="!f.form.valid"> Add </button>
       </form>
   </div>
+</div>
+
+<div class="container photos">
+
+  <h1>Photos</h1>
+
+<ul>
+  <li *ngFor="let photo of photos$"> <!--we iterate through the users$ object and create a name to refer in interpolation below -->
+    <a routerLink="/edit/{{photo.id}}"> <!--id is coming from the Api/json file-->
+      {{photo.title}} 
+    </a> <!--user.name is to show the name of the user related to the id-->
+    <ul>
+      <li>
+        <a href="http://{{photo.website}}">{{photo.url}}</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+
 </div>
 
 

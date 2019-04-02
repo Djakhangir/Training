@@ -26,7 +26,7 @@ this.route.params.subscribe(params => this.user$ = params.id) //to get the param
     this.data.getUser(this.user$).subscribe( // basically we use getUser method from data which is instance above for our DataService;
       data => this.user$ = data // and pass the user$ object as parameter of the method, 
       // then we subscribe to that with observables by saying that data instance linked with DataService
-  )}        // has to return as bound object "user" created above and data instance together. 
-  
+  )        // has to return as bound object "user" created above and data instance together. 
+    }
 
 }

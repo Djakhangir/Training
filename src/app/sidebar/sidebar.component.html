@@ -1,19 +1,24 @@
 <nav>
   <ul>
-    <li>
-      <a routerLink=""><!--helps us to direct the user to different links/routers navigated through routing module-->
+    <li>  <!--class binding helps -->
+      <a routerLink="" [class.activated]="currentUrl == ''"><!--helps us to direct the user to different links/routers navigated through routing module-->
       <i class="material-icons">supervised_user_circle</i>
       </a> 
     </li>
     <li>
-      <a routerLink="posts"> 
+      <a routerLink="posts" [class.activated]="currentUrl == '/posts'" >
       <i class="material-icons">message</i> <!-- material icons and fonts added to the main index.html outside of app folder -->
       </a>
     </li>
     <li>
-      <a routerLink="library">
+      <a routerLink="library" [class.activated]="currentUrl == '/library'">
       <i class="material-icons">video_library</i> 
     </a> 
     </li>
+    <!-- <li>
+      <a routerLink="photos">
+      <i class="material-icons">photo_library</i> 
+    </a> 
+    </li> -->
   </ul>
 </nav>

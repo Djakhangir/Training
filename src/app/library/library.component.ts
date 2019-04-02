@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-// import { Router, ActivatedRoute } from "@angular/router";
-// import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
-// import { ReplaySubject } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-library',
@@ -13,12 +11,10 @@ export class LibraryComponent implements OnInit {
   title: string;
   public videoItems:any=[]; 
   public selectedRow: Number;
+  photos$:Object; // instance to relate to the database.
 
   
-constructor( 
-  // private router:Router,
-  // private activatedRoute: ActivatedRoute,
- ) { }
+constructor(private data:DataService) { }
 
   ngOnInit() {
     this.videoItems = [ {
@@ -51,6 +47,9 @@ constructor(
          available:10,
          price:"$20"
          } ];  
+
+         //Bringing the photos library to my mock data as an experiment;
+    this.data.getPhotos(this.photos$).subscribe(data => this.photos$ = data)
           
     }
                     // This object can be used for ngStyle directive by passing it to the 
@@ -115,10 +114,7 @@ deleteRow(){
       this.videoItems.splice(index, 1);
     } 
   //}
-}
-
-
-  
+} 
 
 }
 

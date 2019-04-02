@@ -19,10 +19,10 @@ const routes: Routes = [
     path:'library',
     component: LibraryComponent
   },
-  // {
-  //   path:'edit/:id',
-  //   component: LibraryComponent
-  // },
+  {
+    path:'edit/:id',
+    component: EditComponent
+  },
   {
     path:'posts',
     component: PostsComponent

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service'; //import service to use the method with get request
+import { Observable } from 'rxjs'; // imported to subscribe to the 
 
 @Component({
   selector: 'app-posts',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
-  constructor() { }
+  posts:Object;
+
+  constructor(private data:DataService) { }
 
   ngOnInit() {
+
+    this.data.getPosts().subscribe(data=>this.posts = data)
   }
 
 }
